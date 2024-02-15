@@ -20,7 +20,21 @@ router.post('/signup', (req, res) => {
                         Connection.query(query, (err) => {
                             if (err) throw err;
                             else {
-                                res.status(200).json({ message: "User Created Successfully" })
+                                query = `Select id from Tbl_users where phoneNumber = '${phoneNumber}'`
+                                Connection.query(query, (err, users) => {
+                                    if (err) throw err;
+                                    else {
+                                        query = `INSERT INTO Tbl_wallet( user_id, balance) VALUES (${users[0].id},0)`
+                                        Connection.query(query, (err,) => {
+                                            if (err) throw err;
+                                            else {
+                                                res.status(200).json({ message: "User Created Successfully" })
+                                            }
+                                        })
+
+                                    }
+                                })
+
                             }
                         });
                     }
@@ -29,11 +43,18 @@ router.post('/signup', (req, res) => {
                         Connection.query(query, (err, user) => {
                             if (err) throw err;
                             else {
-                                query = `SELECT * FROM Tbl_users WHERE email = '${email}' AND password = '${password}'`
-                                Connection.query(query, (err) => {
+                                query = `Select id from Tbl_users where phoneNumber = '${phoneNumber}'`
+                                Connection.query(query, (err, users) => {
                                     if (err) throw err;
                                     else {
-                                        res.status(200).json({ message: "User Created Successfully" })
+                                        query = `INSERT INTO Tbl_wallet( user_id, balance) VALUES (${users[0].id},0)`
+                                        Connection.query(query, (err,) => {
+                                            if (err) throw err;
+                                            else {
+                                                res.status(200).json({ message: "User Created Successfully" })
+                                            }
+                                        })
+
                                     }
                                 })
 
