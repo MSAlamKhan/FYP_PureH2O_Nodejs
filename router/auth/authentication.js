@@ -56,7 +56,7 @@ router.post("/login", (req, res) => {
     const { email, password } = req.body
 
     try {
-        var query = `SELECT * FROM Tbl_users WHERE PhoneNumber = '${email}' AND password = '${password}'`
+        var query = `SELECT * FROM Tbl_users WHERE phoneNumber = '${email}' AND password = '${password}'`
         Connection.query(query, (err, user) => {
             if (err) throw err;
             else {
@@ -92,7 +92,7 @@ router.post("/login", (req, res) => {
 router.post('/changePassword', async (req, res) => {
     const { phoneNumber, newPassword } = req.body
 
-    var qurey = `UPDATE Tbl_users SET password='${newPassword}' where PhoneNumber = '${phoneNumber}'`
+    var qurey = `UPDATE Tbl_users SET password='${newPassword}' where phoneNumber = '${phoneNumber}'`
     const updatedResult = await new Promise((resolve, reject) => {
         Connection.query(qurey, (err, res) => {
             if (err) reject(err);
@@ -109,7 +109,7 @@ router.post('/verifyPhoneNumber', async (req, res) => {
     const { phoneNumber } = req.body
     console.log(phoneNumber);
     try {
-        var qurey = `Select * From Tbl_users where PhoneNumber = ${phoneNumber}`;
+        var qurey = `Select * From Tbl_users where phoneNumber = ${phoneNumber}`;
         const result = await new Promise((resolve, reject) => {
             Connection.query(qurey, (err, res) => {
                 if (err) reject(err);
