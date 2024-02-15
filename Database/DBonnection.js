@@ -1,13 +1,13 @@
 const SQL = require('mysql')
-
+const env = require('dotenv').config()
 const Database = SQL.createConnection(
     /// live connection
     { 
-        host: process.env.RDS_HOST,
-        port: process.env.PORT,
-        user: process.env.RDS_USER,
-        password: process.env.RDS_PASSWORD,
-        database:process.env.RDS_DB
+        host: env.parsed.RDS_HOST,
+        port: env.parsed.PORT,
+        user: env.parsed.RDS_USER,
+        password: env.parsed.RDS_PASSWORD,
+        database:env.parsed.RDS_DB
     }
     // local connection
     // {
@@ -21,13 +21,7 @@ const Database = SQL.createConnection(
 Database.connect(function (err) {
     if (err){ console.log(err) }
     else{
-        console.log("Connected!",{ 
-            host: process.env.RDS_HOST,
-            port: process.env.PORT,
-            user: process.env.RDS_USER,
-            password: process.env.RDS_PASSWORD,
-            database:process.env.RDS_DB
-        });
+        console.log("Connected!");
     }
 
 });

@@ -10,7 +10,6 @@ const authenticationRouter = require("./router/auth/authentication")
 const shopRouter = require("./router/Shop/shopServices");
 const connection = require("./Database/DBonnection");
 const commonRouter = require("./router/Common/commonServices");
-require('dotenv').config()
 // server.listen setups / starts the server on the given port
 server.listen(8000, () => {
     console.log("server running on port 8000",);
