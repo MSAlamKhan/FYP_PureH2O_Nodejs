@@ -21,7 +21,13 @@ const Database = SQL.createConnection(
 Database.connect(function (err) {
     if (err){ console.log(err) }
     else{
-        console.log("Connected!");
+        console.log("Connected!",{ 
+            host: process.env.RDS_HOST,
+            port: process.env.PORT,
+            user: process.env.RDS_USER,
+            password: process.env.RDS_PASSWORD,
+            database:process.env.RDS_DB
+        });
     }
 
 });
