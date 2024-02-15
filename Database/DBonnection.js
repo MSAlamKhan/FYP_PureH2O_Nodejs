@@ -18,13 +18,13 @@ const Database = SQL.createConnection(
     // }
 );
 
-// Database.connect(function (err) {
-//     if (err){ console.log(err) }
-//     else{
-//         console.log("Connected!");
-//     }
+Database.connect(function (err) {
+    if (err){ console.log(err) }
+    else{
+        console.log("Connected!");
+    }
 
-// });
+});
 
 
 module.exports = Database
