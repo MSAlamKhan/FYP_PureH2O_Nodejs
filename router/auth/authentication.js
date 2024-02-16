@@ -51,7 +51,14 @@ router.post('/signup', (req, res) => {
                                         Connection.query(query, (err,) => {
                                             if (err) throw err;
                                             else {
-                                                res.status(200).json({ message: "User Created Successfully" })
+                                                query = `INSERT INTO Tbl_vendor_inventory (vendorId, inventory) VALUES (${users[0].id},0)`
+                                                Connection.query(query, (err, inventory) => {
+                                                    if (err) throw err;
+                                                    else {
+                                                        res.status(200).json({ message: "User Created Successfully" }) 
+                                                    }
+                                                });
+
                                             }
                                         })
 
