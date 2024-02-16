@@ -52,8 +52,8 @@ router.get("/getCustomers", async (req, res) => {
 
 
 router.get("/getInventory", async (req, res) => {
-    const { id } = req.body;
-    console.log("this is the id", id);
+    const  id  = req.body.id;
+    console.log("this is the id", req);
     let query = `Select inventory from Tbl_vendor_inventory where vendorId= ${id}`;
     Connection.query(query, (err, result) => {
         if (err) {
