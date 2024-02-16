@@ -55,7 +55,7 @@ router.get("/getInventory", async (req, res) => {
     const { id } = req.body;
     let query = `Select inventory from Tbl_vendor_inventory where vendorId= ${id}`;
     Connection.query(query, (err, result) => {
-        if (err) {res.status(200).json({ message: "Internal Server Error" })}
+        if (err) {res.status(500).json({ message: "Internal Server Error" })}
         else {
             res.status(200).json({ message: "Inventory Found", inventory: result[0].inventory })
         }
