@@ -53,7 +53,6 @@ router.get("/getCustomers", async (req, res) => {
 
 router.get("/getInventory/:id", async (req, res) => {
     const id = req.params.id;
-    console.log("this is my id ", id);
     let query = `Select inventory from Tbl_vendor_inventory where vendorId= ${id}`;
     Connection.query(query, (err, result) => {
         if (err) {
@@ -70,8 +69,6 @@ router.get("/getInventory/:id", async (req, res) => {
 
 router.post('/updateInventory', async (req, res) => {
     const { vendorId, bottles } = req.body
-    console.log(req.body);
-
     try {
         var query = `select inventory from Tbl_vendor_inventory where vendorId = ${vendorId}`
         const initialInventory = await new Promise((resolve, reject) => {
