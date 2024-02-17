@@ -20,10 +20,10 @@ server.listen(8000, () => {
     // })
 
 });
-
+server.use(formData.array())
 server.use(express.urlencoded({ extended: true }))
 server.use(express.json());
-server.use(formData.array())
+
 server.use('/api', dummyRouter) // adding route 
 server.use("/auth", authRouter)
 server.use('/authentication', authenticationRouter)
