@@ -52,11 +52,12 @@ router.post('/addTransection', async (req, res) => {
         const balanceResult = await new Promise((resolve, reject) => {
             Connection.query(getBalance, (err, result) => {
                 if (err) reject(err);
-                else resolve(result);
+                else resolve(result[0].balance);
             })
         })
+
         // update balance
-        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(amount) + parseInt(balanceResult[0].balance)} WHERE user_id=${userId}`
+        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(amount) + parseInt(balanceResult)} WHERE user_id=${userId}`
         const creditResult = await new Promise((resolve, reject) => {
             Connection.query(creditQuery, (err, result) => {
                 if (err) reject(err);
@@ -119,7 +120,7 @@ router.get("/getTransection", async (req, res) => {
         res.status(200).json({ message: "Transection Found", data: result })
     }
     else {
-        res.status(404).json({ message: "No Transection Found", data:[]})
+        res.status(404).json({ message: "No Transection Found", data: [] })
     }
 
 })

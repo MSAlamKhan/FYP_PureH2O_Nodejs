@@ -127,7 +127,7 @@ router.post('/changePassword', async (req, res) => {
             else resolve(res)
         })
     })
-
+console.log("updatedResult ==>",updatedResult);
     res.status(200).json({ message: "Password updated successfully" })
 
 })
