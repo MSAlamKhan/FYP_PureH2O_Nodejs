@@ -66,7 +66,7 @@ router.post('/addTransection', async (req, res) => {
                 else resolve(result);
             })
         })
-        res.status(200).json({ message: "Transection Successfull", amount: amount })
+        res.status(200).json({ message: "Transection Successfull", amount: parseInt(amount) + parseInt(balanceResult) })
     } else {
         //get current balance
         var getBalance = `SELECT balance from Tbl_wallet WHERE user_id =${userId}`
@@ -85,7 +85,7 @@ router.post('/addTransection', async (req, res) => {
                 else resolve(result);
             })
         })
-        res.status(200).json({ message: "Transection Successfull", amount: amount })
+        res.status(200).json({ message: "Transection Successfull", amount: parseInt(balanceResult) - parseInt(amount) })
     }
 
 
