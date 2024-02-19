@@ -60,6 +60,7 @@ router.post('/addTransection', async (req, res) => {
                     }
                 })
             })
+            console.log(balanceResult,"balanceResult");
             const balance = balanceResult[0].balance
             console.log(balance);
             // update balance
