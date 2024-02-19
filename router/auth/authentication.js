@@ -55,7 +55,7 @@ router.post('/signup', (req, res) => {
                                                 Connection.query(query, (err, inventory) => {
                                                     if (err) throw err;
                                                     else {
-                                                        res.status(200).json({ message: "User Created Successfully" }) 
+                                                        res.status(200).json({ message: "User Created Successfully" })
                                                     }
                                                 });
 
@@ -96,7 +96,7 @@ router.post("/login", (req, res) => {
                 FROM
                     Tbl_users U
                 JOIN
-                    Tbl_wallet W ON U.id = ${user[0].id};
+                    Tbl_wallet W ON U.id = W.user_id WHERE u.id =${user[0].id} ;
                 `
                     Connection.query(joinQuery, (err, userData) => {
                         console.log(userData[0]);
@@ -128,7 +128,7 @@ router.post('/changePassword', async (req, res) => {
             else resolve(res)
         })
     })
-console.log("updatedResult ==>",updatedResult);
+    console.log("updatedResult ==>", updatedResult);
     res.status(200).json({ message: "Password updated successfully" })
 
 })
