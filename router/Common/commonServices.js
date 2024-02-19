@@ -53,10 +53,10 @@ router.post('/addTransection', async (req, res) => {
             var getBalance = `SELECT balance from Tbl_wallet WHERE user_id =${userId}`
 
             const balanceResult = await new Promise((resolve, reject) => {
-                Connection.query(getBalance, (err, result) => {
+                Connection.query(getBalance, (err, res) => {
                     if (err) { reject(err); }
                     else {
-                        resolve(result);
+                        resolve(res);
                     }
                 })
             })
