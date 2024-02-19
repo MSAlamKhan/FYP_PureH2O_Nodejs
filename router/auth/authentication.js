@@ -99,6 +99,7 @@ router.post("/login", (req, res) => {
                     Tbl_wallet W ON U.id = ${user[0].id};
                 `
                     Connection.query(joinQuery, (err, userData) => {
+                        console.log(userData[0]);
                         res.status(200).json({ message: "user Login Successfull", data: userData[0] })
 
                     })

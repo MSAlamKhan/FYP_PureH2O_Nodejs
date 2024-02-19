@@ -53,7 +53,6 @@ router.post('/addTransection', async (req, res) => {
             Connection.query(getBalance, (err, result) => {
                 if (err) { reject(err); }
                 else {
-                    console.log("result[0].balance", result[0].balance);
                     resolve(result[0].balance);
                 }
             })
