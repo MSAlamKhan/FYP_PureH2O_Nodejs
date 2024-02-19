@@ -39,58 +39,64 @@ router.post("/updateProfile", async (req, res) => {
 router.post('/addTransection', async (req, res) => {
     const { userId, transectionId, amount, type } = req.body
     var query = `INSERT INTO Tbl_transections(user_id, transection_id, type, amount) VALUES (${userId},'${transectionId}','${type}',${amount})`
+
+
     const result = await new Promise((resolve, reject) => {
         Connection.query(query, (err, result) => {
             if (err) reject(err);
             else resolve(result);
         })
     })
-    if (type == "credit") {
-        // get current balance
-        var getBalance = `SELECT balance from Tbl_wallet WHERE user_id =${userId}`
+    try {
+        if (type == "credit") {
+            // get current balance
+            var getBalance = `SELECT balance from Tbl_wallet WHERE user_id =${userId}`
 
-        const balanceResult = await new Promise((resolve, reject) => {
-            Connection.query(getBalance, (err, result) => {
-                if (err) { reject(err); }
-                else {
-                    console.log("result[0].balance", result[0].balance);
-                    resolve(result);
-                }
+            const balanceResult = await new Promise((resolve, reject) => {
+                Connection.query(getBalance, (err, result) => {
+                    if (err) { reject(err); }
+                    else {
+                        resolve(result);
+                    }
+                })
             })
-        })
-        const balance = balanceResult[0].balance
-        console.log(balance);
-        // update balance
-        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(amount) + parseInt(balance)} WHERE user_id=${userId}`
-        const creditResult = await new Promise((resolve, reject) => {
-            Connection.query(creditQuery, (err, result) => {
-                if (err) reject(err);
-                else resolve(result);
+            const balance = balanceResult[0].balance
+            console.log(balance);
+            // update balance
+            var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(amount) + parseInt(balance)} WHERE user_id=${userId}`
+            const creditResult = await new Promise((resolve, reject) => {
+                Connection.query(creditQuery, (err, result) => {
+                    if (err) reject(err);
+                    else resolve(result);
+                })
             })
-        })
-        res.status(200).json({ message: "Transection Successfull" })
-    } else {
-        //get current balance
-        var getBalance = `SELECT balance from Tbl_wallet WHERE user_id =${userId}`
+            res.status(200).json({ message: "Transection Successfull" })
+        } else {
+            //get current balance
+            var getBalance = `SELECT balance from Tbl_wallet WHERE user_id =${userId}`
 
-        const balanceResult = await new Promise((resolve, reject) => {
-            Connection.query(getBalance, (err, result) => {
-                if (err) { reject(err); }
-                else { resolve(result[0].balance); }
+            const balanceResult = await new Promise((resolve, reject) => {
+                Connection.query(getBalance, (err, result) => {
+                    if (err) { reject(err); }
+                    else { resolve(result[0].balance); }
+                })
             })
-        })
 
-        const balance = balanceResult[0].balance
-        // update Query
-        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(balance) - parseInt(amount)} WHERE user_id=${userId}`
-        const creditResult = await new Promise((resolve, reject) => {
-            Connection.query(creditQuery, (err, result) => {
-                if (err) reject(err);
-                else resolve(result);
+            const balance = balanceResult[0].balance
+            // update Query
+            var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(balance) - parseInt(amount)} WHERE user_id=${userId}`
+            const creditResult = await new Promise((resolve, reject) => {
+                Connection.query(creditQuery, (err, result) => {
+                    if (err) reject(err);
+                    else resolve(result);
+                })
             })
-        })
-        res.status(200).json({ message: "Transection Successfull" })
+            res.status(200).json({ message: "Transection Successfull" })
+        }
+    } catch (error) {
+        console.log(error);
     }
+
 
 
 })
