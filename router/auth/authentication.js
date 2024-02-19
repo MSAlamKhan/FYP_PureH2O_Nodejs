@@ -159,5 +159,17 @@ router.post('/verifyPhoneNumber', async (req, res) => {
 
 })
 
+router.get("/getUserDetails/:id", async (req, res) => {
+    const userId = req.params.id;
+    var query = `SELECT U.*, W.balance FROM Tbl_users U JOIN Tbl_wallet W ON U.id = W.user_id WHERE U.id =${userId} ;`
+    const user = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, res) => {
+            if (err) reject(err);
+            else resolve(res);
 
+        })
+    })
+    res.status(200).json({ message: "User Data Fetched", data: user[0] })
+
+})
 module.exports = router
