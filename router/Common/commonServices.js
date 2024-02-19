@@ -51,13 +51,16 @@ router.post('/addTransection', async (req, res) => {
 
         const balanceResult = await new Promise((resolve, reject) => {
             Connection.query(getBalance, (err, result) => {
-                if (err) reject(err);
-                else resolve(result[0].balance);
+                if (err) { reject(err); }
+                else {
+                    console.log("result[0].balance", result[0].balance);
+                    resolve(result);
+                }
             })
         })
-
+        const balance = balanceResult[0].balance
         // update balance
-        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(amount) + parseInt(balanceResult)} WHERE user_id=${userId}`
+        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(amount) + parseInt(balance)} WHERE user_id=${userId}`
         const creditResult = await new Promise((resolve, reject) => {
             Connection.query(creditQuery, (err, result) => {
                 if (err) reject(err);
@@ -71,11 +74,14 @@ router.post('/addTransection', async (req, res) => {
 
         const balanceResult = await new Promise((resolve, reject) => {
             Connection.query(getBalance, (err, result) => {
-                if (err) reject(err);
-                else resolve(result[0].balance);
+                if (err) { reject(err); }
+                else { resolve(result[0].balance); }
             })
         })
-        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(balanceResult) - parseInt(amount)} WHERE user_id=${userId}`
+
+        const balance = balanceResult[0].balance
+        // update Query
+        var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(balance) - parseInt(amount)} WHERE user_id=${userId}`
         const creditResult = await new Promise((resolve, reject) => {
             Connection.query(creditQuery, (err, result) => {
                 if (err) reject(err);
