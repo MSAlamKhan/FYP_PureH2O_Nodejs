@@ -96,11 +96,10 @@ router.post("/login", (req, res) => {
                 FROM
                     Tbl_users U
                 JOIN
-                    Tbl_wallet W ON U.id = W.user_id WHERE u.id =${user[0].id} ;
+                    Tbl_wallet W ON U.id = W.user_id WHERE U.id =${user[0].id} ;
                 `
                     Connection.query(joinQuery, (err, userData) => {
-                        console.log(userData[0]);
-                        res.status(200).json({ message: "user Login Successfull", data: userData[0] })
+                        res.status(200).json({ message: "user Login Successfull", data: userData })
 
                     })
                 }
