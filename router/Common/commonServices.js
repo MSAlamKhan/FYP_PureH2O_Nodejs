@@ -59,6 +59,7 @@ router.post('/addTransection', async (req, res) => {
             })
         })
         const balance = balanceResult[0].balance
+        console.log(balance);
         // update balance
         var creditQuery = `UPDATE Tbl_wallet SET balance=${parseInt(amount) + parseInt(balance)} WHERE user_id=${userId}`
         const creditResult = await new Promise((resolve, reject) => {
