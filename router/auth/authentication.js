@@ -15,7 +15,7 @@ router.post('/signup', (req, res) => {
             else {
                 if (users.length > 0) res.status(403).json({ message: "Email and Passwords already exist" })
                 else {
-                    if (role == 1) {
+                    if (role == 2) {
                         query = `INSERT INTO Tbl_users (role_id, name, email, password, homeAddress, phoneNumber) VALUES (${role},'${name}','${email}','${password}','${homeAddres}', '${phoneNumber}')`
                         Connection.query(query, (err) => {
                             if (err) throw err;
