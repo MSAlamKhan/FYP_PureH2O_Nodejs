@@ -8,7 +8,7 @@ router.post("/updateProfile", async (req, res) => {
     const { userId, role, name, shopName, shopAddress, homeAddres, phoneNumber, email, password } = req.body
 
     if (role == 2) {
-        var query = `UPDATE Tbl_users SET name='${name}',email='${email}',password ='${password}',homeAddress='${homeAddres}',PhoneNumber='${phoneNumber}' Where id =${userId} `
+        var query = `UPDATE Tbl_users SET name='${name}',email='${email}',homeAddress='${homeAddres}',PhoneNumber='${phoneNumber}' Where id =${userId} `
         const result = await new Promise((resolve, reject) => {
             Connection.query(query, (err, result) => {
                 if (err) reject(err);
@@ -17,7 +17,7 @@ router.post("/updateProfile", async (req, res) => {
         })
 
     } else {
-        var query = `UPDATE Tbl_users SET name='${name}',email='${email}',password ='${password}',shopAddress='${shopAddress}',shopName='${shopName}',PhoneNumber='${phoneNumber}'Where id =${userId}`
+        var query = `UPDATE Tbl_users SET name='${name}',email='${email}',shopAddress='${shopAddress}',shopName='${shopName}',PhoneNumber='${phoneNumber}'Where id =${userId}`
         const result = await new Promise((resolve, reject) => {
             Connection.query(query, (err, result) => {
                 if (err) reject(err);
