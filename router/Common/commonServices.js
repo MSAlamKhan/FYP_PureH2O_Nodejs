@@ -7,7 +7,7 @@ router.post("/updateProfile", async (req, res) => {
 
     const { userId, role, name, shopName, shopAddress, homeAddres, phoneNumber, email, password } = req.body
 
-    if (role == 1) {
+    if (role == 2) {
         var query = `UPDATE Tbl_users SET name='${name}',email='${email}',password ='${password}',homeAddress='${homeAddres}',PhoneNumber='${phoneNumber}' Where id =${userId} `
         const result = await new Promise((resolve, reject) => {
             Connection.query(query, (err, result) => {
