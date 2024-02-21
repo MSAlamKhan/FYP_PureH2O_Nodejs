@@ -137,8 +137,8 @@ router.post("/addBank", async (req, res) => {
 })
 
 
-router.get("/getBanks", async (req, res) => {
-    const { userId } = req.body
+router.get("/getBanks/:userId", async (req, res) => {
+    const { userId } = req.params
     var query = `SELECT * FROM Tbl_vendor_banks WHERE user_id = ${userId}`
     const result = await new Promise((resolve, reject) => {
         Connection.query(query, (err, result) => {
