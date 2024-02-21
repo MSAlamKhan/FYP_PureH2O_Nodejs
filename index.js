@@ -10,6 +10,7 @@ const authenticationRouter = require("./router/auth/authentication")
 const shopRouter = require("./router/Shop/shopServices");
 const connection = require("./Database/DBonnection");
 const commonRouter = require("./router/Common/commonServices");
+const customerRouter = require("./router/Customer/customerService");
 // server.listen setups / starts the server on the given port
 server.listen(8000, () => {
     console.log("server running on port 8000",);
@@ -29,6 +30,7 @@ server.use("/auth", authRouter)
 server.use('/authentication', authenticationRouter)
 server.use('/shop', shopRouter);
 server.use('/common', commonRouter);
+server.use("/customer",customerRouter)
 
 
 // // server.get gets the requested page or data
