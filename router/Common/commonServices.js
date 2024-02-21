@@ -108,8 +108,8 @@ router.post('/addTransection', async (req, res) => {
 
 })
 
-router.get("/getTransection", async (req, res) => {
-    const { userId } = req.body
+router.get("/getTransection/:userId", async (req, res) => {
+    const { userId } = req.params
     var query = `SELECT * FROM Tbl_transections WHERE user_id = ${userId}`
     const result = await new Promise((resolve, reject) => {
         Connection.query(query, (err, result) => {
