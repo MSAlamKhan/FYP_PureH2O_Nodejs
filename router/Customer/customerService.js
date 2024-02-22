@@ -4,7 +4,7 @@ const Connection = require("../../Database/DBonnection")
 
 router.get("/getVendors", async (req, res) => {
 
-    var query = "Select * from Tbl_users where role_id = 2";
+    var query = "Select * from Tbl_users where role_id = 1";
     const result = await new Promise((resolve, reject) => {
         Connection.query(query, (err, result) => {
             if (err) reject(err);
