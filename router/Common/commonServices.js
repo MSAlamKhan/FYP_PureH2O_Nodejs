@@ -37,8 +37,8 @@ router.post("/updateProfile", async (req, res) => {
 })
 
 router.post('/addTransection', async (req, res) => {
-    const { userId, transectionId, amount, type } = req.body
-    var query = `INSERT INTO Tbl_transections(user_id, transection_id, type, amount) VALUES (${userId},'${transectionId}','${type}',${amount})`
+    const { userId, transectionId, amount, type, description } = req.body
+    var query = `INSERT INTO Tbl_transections(user_id, transection_id, type, amount, description) VALUES (${userId},'${transectionId}','${type}',${amount},'${description}')`
     const result = await new Promise((resolve, reject) => {
         Connection.query(query, (err, result) => {
             if (err) reject(err);
@@ -93,20 +93,7 @@ router.post('/addTransection', async (req, res) => {
 
 
 
-router.post('/addTransection', async (req, res) => {
-    const { userId, transectionId, amount, type } = req.body
-    var query = `INSERT INTO Tbl_transections(user_id, transection_id, type, amount) VALUES (${userId},'${transectionId}','${type}',${amount})`
-    const result = await new Promise((resolve, reject) => {
-        Connection.query(query, (err, result) => {
-            if (err) reject(err);
-            else resolve(result);
-        })
-    })
 
-    console.log("add transection api", result);
-    res.status(200).json({ message: "Transection Successful" })
-
-})
 
 router.get("/getTransection/:userId", async (req, res) => {
     const { userId } = req.params
