@@ -12,8 +12,8 @@ const connection = require("./Database/DBonnection");
 const commonRouter = require("./router/Common/commonServices");
 const customerRouter = require("./router/Customer/customerService");
 // server.listen setups / starts the server on the given port
-server.listen(443, () => {
-    console.log("server running on port 443",);
+server.listen(8000, () => {
+    console.log("server running on port 8000",);
     // connection.connect((err) => {
     //     if (err) throw console.log(err);
     //     else console.log("Connection established");
