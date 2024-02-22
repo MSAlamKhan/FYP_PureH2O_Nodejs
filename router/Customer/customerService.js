@@ -37,16 +37,24 @@ router.get("/getMyVendor/:id", async (req, res) => {
             else resolve(result);
         })
     });
-    query = `Select * from Tbl_users where id =${vendor[0].vendorId}`
 
-    const result = await new Promise((resolve, reject) => {
-        Connection.query(query, (err, result) => {
-            if (err) reject(err);
-            else resolve(result);
-        })
-    });
+    if (vendor[0]?.vendorId) {
+        query = `Select * from Tbl_users where id =${vendor[0].vendorId}`
 
-    res.status(200).json({ message: "vendor fetched!", data: result[0] })
+        const result = await new Promise((resolve, reject) => {
+            Connection.query(query, (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            })
+        });
+        res.status(200).json({ message: "vendor fetched!", data: result[0] })
+    } else {
+
+        res.status(200).json({ message: "No Vendor Assigned" })
+    }
+
+
+
 
 })
 
