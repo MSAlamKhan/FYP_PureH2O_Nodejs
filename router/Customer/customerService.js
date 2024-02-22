@@ -84,6 +84,81 @@ router.get("/getOrder/:id", async (req, res) => {
 
 })
 
+router.post("/orderPayment", async (req, res) => {
+    const { orderId, amount, userId, vendorId } = req.body
+    let query = `UPDATE Tbl_orders
+    SET payment_status = 'Paid'
+    WHERE id =${orderId};`
+
+    // update order payment status
+    const result1 = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        })
+    })
+    // add transactions debit for customer 
+    query = `INSERT INTO Tbl_transections(user_id, transection_id, type, amount, description) VALUES (${userId},'ndsakej091ie12123','debit',${amount},'Payment of Order No. ${orderId}')`
+    const result2 = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        })
+    })
+
+    // add transactions credit for vendor
+    query = `INSERT INTO Tbl_transections(user_id, transection_id, type, amount, description) VALUES (${vendorId},'ndsakej091ie12123','credit',${amount},'Payment of Order No. ${orderId}')`
+    const result3 = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        })
+    })
+
+    // get balance of customer
+    query = `Select balance From Tbl_wallet where user_id = ${userId}`
+    const customerBalance = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        })
+    })
+console.log("customer balance",customerBalance[0].balance);
+    // update balance
+    query = `UPDATE Tbl_wallet
+    SET balance = ${parseInt(customerBalance[0].balance) - parseInt(amount)}
+    WHERE user_id = ${userId};`
+    const update1 = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        })
+    })
+
+    // get balance of vendor
+    query = `Select balance From Tbl_wallet where user_id = ${vendorId}`
+    const vendorBalance = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        })
+    })
+
+    console.log("parseInt(vendorBalance[0].balance)",parseInt(vendorBalance[0].balance));
+    // update balance
+    query = `UPDATE Tbl_wallet
+    SET balance = ${parseInt(vendorBalance[0].balance) + parseInt(amount)}
+    WHERE user_id = ${vendorId};`
+    const update2 = await new Promise((resolve, reject) => {
+        Connection.query(query, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+        })
+    })
+
+    res.status(200).json({ message: "Payment SuccessFul", newBalance: customerBalance[0].balance - amount })
+
+})
 
 
 module.exports = router
