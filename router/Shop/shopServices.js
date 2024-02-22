@@ -2,8 +2,8 @@ const router = require('express').Router();
 const { json } = require('express');
 const Connection = require("../../Database/DBonnection")
 
-router.get("/getCustomers", async (req, res) => {
-    const { vendorId } = req.body
+router.get("/getCustomers/:vendorId", async (req, res) => {
+    const { vendorId } = req.params
     try {
         const query1 = `SELECT * FROM Tbl_customers_vendors WHERE vendorId = ${vendorId}`;
         const result1 = await new Promise((resolve, reject) => {
@@ -28,6 +28,7 @@ router.get("/getCustomers", async (req, res) => {
 
                 if (result2.length > 0) {
                     customers.push({
+                        id: result2[0].id,
                         customerName: result2[0].name,
                         customerAddress: result2[0].homeAddress
                     });
