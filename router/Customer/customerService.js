@@ -49,8 +49,7 @@ router.get("/getMyVendor/:id", async (req, res) => {
         });
         res.status(200).json({ message: "vendor fetched!", data: result[0] })
     } else {
-
-        res.status(200).json({ message: "No Vendor Assigned" })
+        res.status(200).json({ message: "No Vendor Assigned", data: null })
     }
 
 
